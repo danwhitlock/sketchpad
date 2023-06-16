@@ -1,0 +1,16 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+#grid-container {
+    display: grid;
+}
+
+.grid-item {
+    border: 1px solid blue;
+    box-sizing: border-box;
+}
