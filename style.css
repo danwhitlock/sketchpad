@@ -4,13 +4,23 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    background-color: rgb(185, 207, 235);
+    flex-direction: column;
 }
 
 #grid-container {
     display: grid;
+    background-color: antiquewhite;
 }
 
 .grid-item {
-    border: 1px solid blue;
     box-sizing: border-box;
+}
+
+button {
+    height: 75px;
+    width: 150px;
+    margin-top: 25px;
+    font-size: 20px;
+    border: 2px solid black;
 }
