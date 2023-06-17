@@ -1,56 +1,47 @@
-// Create an initial grid of 16x16 using a loop
+// Set container size
 
 const container = document.getElementById('grid-container');
+container.style.width = '500px';
+container.style.height = '500px';
+
 let canvasSize = 16;
 let gridItems = [];
 
-// Generating the grid
+// Generate the grid
 
 function createGrid(size) {
-  container.style.gridTemplate = `repeat(${size}, 1fr) / repeat(${size}, 1fr)`;
-  container.style.maxWidth = `calc(25px * ${size})`;
+  const gridSize = size * size;
 
 // Clear the existing grid
 
-while (container.firstChild) {
-  container.firstChild.removeEventListener('mouseover', handleGridItemMouseOver)
-  container.removeChild(container.firstChild);
+  while (container.firstChild) {
+    container.firstChild.removeEventListener('mouseover', mouseoverEffect)
+    container.removeChild(container.firstChild);
+  }
+
+  container.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+  container.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+
+  const itemSize = parseInt(container.style.width) / size;
+
+  for (let i = 0; i < gridSize; i++) {
+    const div = document.createElement('div');
+    div.classList.add('grid-item');
+    div.style.width = `${itemSize}px`;
+    div.style.height = `${itemSize}px`;
+    div.addEventListener('mouseover', mouseoverEffect);
+    container.appendChild(div);
+    gridItems.push(div);
+  }
 }
 
-for (let i = 0; i <16; i++) {
-    for (let j = 0; j <16; j++) {
-        const div = document.createElement('div');
-        div.classList.add('grid-item');
-        div.style.width = '25px';
-        div.style.height = '25px';
-        div.addEventListener('mouseover', handleGridItemMouseOver);
-        container.appendChild(div);
-        gridItems.push(div);
-    }
-}
-}
 
-function handleGridItemMouseOver() {
+function mouseoverEffect() {
   this.style.backgroundColor = 'black';
 }
 
 
 createGrid(canvasSize);
-
-
-
-
-
-/* The above is not working as intended - the grid is generated but is not a square, and the grid container gets resized.  
-
-This needs correcting so that if the users selects '50', the result is a grid of 50x50 divs within the same total container area as before.  In other words, the divs should change size to fit the container, not the other way around 
-
-*/
-
-
-
-
-
 
 // Re-setting / erasing the grid content
 
@@ -63,6 +54,7 @@ clearButton.addEventListener('click', function() {
   });
 });
 
+// using square root to work out columns and rows - there might be a simpler way?
 
 reSizeButton.addEventListener('click', function() {
   const newSize = prompt("Enter a number between 16 and 100");
